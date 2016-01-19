@@ -35,7 +35,7 @@ public class GlassMill {
         return new byte[1];
     }
 
-    Object cipher() {
+    Cipher cipher() {
         return cipher;
     }
 }

@@ -2,6 +2,8 @@ package org.luksze.glassmill;
 
 import org.junit.Test;
 
+import javax.crypto.Cipher;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -26,6 +28,7 @@ public class GlassMillTest {
     @Test
     public void canCreateAesCipherInstance() throws Exception {
         GlassMill glassMill = new GlassMill();
-        assertNotNull(glassMill.cipher());
+        Cipher cipher = glassMill.cipher();
+        assertNotNull(cipher);
     }
 }
