@@ -12,4 +12,8 @@ public class Cipher {
     byte[] bytesToEncrypt() {
         return copyOf(bytes, bytes.length);
     }
+
+    public byte[] bytesAfterEncryption() {
+        return new byte[1];
+    }
 }

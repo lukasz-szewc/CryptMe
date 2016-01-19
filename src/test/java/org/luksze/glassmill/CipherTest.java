@@ -21,4 +21,11 @@ public class CipherTest {
         cipher.encrypt(BYTES, "secretPassword");
         assertArrayEquals(cipher.bytesToEncrypt(), BYTES);
     }
+
+    @Test
+    public void canExpectEncryptedByteArray() throws Exception {
+        Cipher cipher = new Cipher();
+        cipher.encrypt(BYTES, "secretPassword");
+        assertNotNull(cipher.bytesAfterEncryption());
+    }
 }
