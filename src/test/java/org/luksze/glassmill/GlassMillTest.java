@@ -22,4 +22,10 @@ public class GlassMillTest {
         glassMill.encrypt(BYTES, "secretPassword");
         assertNotNull(glassMill.bytesAfterEncryption());
     }
+
+    @Test
+    public void canCreateAesCipherInstance() throws Exception {
+        GlassMill glassMill = new GlassMill();
+        assertNotNull(glassMill.cipher());
+    }
 }
