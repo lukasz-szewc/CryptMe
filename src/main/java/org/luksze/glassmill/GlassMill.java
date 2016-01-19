@@ -2,7 +2,7 @@ package org.luksze.glassmill;
 
 import static java.util.Arrays.copyOf;
 
-public class Cipher {
+public class GlassMill {
     private byte[] bytes;
 
     public void encrypt(byte[] bytes, String secretPassword) {
