@@ -1,6 +1,6 @@
 package org.luksze.glassmill;
 
-import java.util.Arrays;
+import static java.util.Arrays.copyOf;
 
 public class Cipher {
     private byte[] bytes;
@@ -10,6 +10,6 @@ public class Cipher {
     }
 
     byte[] bytesToEncrypt() {
-        return Arrays.copyOf(bytes, bytes.length);
+        return copyOf(bytes, bytes.length);
     }
 }
