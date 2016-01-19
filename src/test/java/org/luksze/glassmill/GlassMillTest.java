@@ -14,14 +14,14 @@ public class GlassMillTest {
     @Test
     public void canTakeByteArrayForEncryption() throws Exception {
         GlassMill glassMill = new GlassMill();
-        glassMill.encrypt(BYTES, "secretPassword");
+        glassMill.encrypt(BYTES, "secretPassword".getBytes());
         assertArrayEquals(glassMill.bytesToEncrypt(), BYTES);
     }
 
     @Test
     public void canExpectEncryptedByteArray() throws Exception {
         GlassMill glassMill = new GlassMill();
-        glassMill.encrypt(BYTES, "secretPassword");
+        glassMill.encrypt(BYTES, "secretPassword".getBytes());
         assertNotNull(glassMill.bytesAfterEncryption());
     }
 

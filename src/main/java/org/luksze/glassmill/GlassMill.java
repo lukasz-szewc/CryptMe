@@ -23,7 +23,7 @@ public class GlassMill {
         }
     }
 
-    public void encrypt(byte[] bytes, String secretPassword) {
+    public void encrypt(byte[] bytes, byte[] secretPassword) {
         this.bytes = bytes;
     }
 
