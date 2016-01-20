@@ -20,7 +20,9 @@ public class Cipher {
 
     private static final byte[] DEFAULT_INITIAL_VECTOR = {
             (byte) 0x21, (byte) 0x56, (byte) 0x8C, (byte) 0x84,
-            (byte) 0xA2, (byte) 0xB3, (byte) 0xFD, (byte) 0x31
+            (byte) 0xA2, (byte) 0xB3, (byte) 0xFD, (byte) 0x31,
+            (byte) 0x55, (byte) 0x26, (byte) 0xA6, (byte) 0xFF,
+            (byte) 0x90, (byte) 0x49, (byte) 0xAF, (byte) 0xAD
     };
 
     private static final int DEFAULT_SIZE = 128;
