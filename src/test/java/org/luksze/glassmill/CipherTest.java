@@ -9,17 +9,20 @@ import static org.junit.Assert.*;
 public class CipherTest {
 
     @Test
-    public void testName() throws Exception {
+    public void checkCipherBasicFunctionality() throws Exception {
+        //given
         Cipher cipher = new Cipher();
 
-        for (int i = 0; i < 10; i++) {
-            byte[] passwords = cipher.encrypt("Test".getBytes(), "password");
-            System.out.println(Arrays.toString(passwords));
+        //when
+        byte[] encrypted = cipher.encrypt("Test".getBytes(), "password");
 
-            byte[] passwords1 = cipher.decrypt(passwords, "password");
-            System.out.println(new String(passwords1));
-        }
+        //then
+        assertTrue(encrypted.length > 0);
+        assertNotEquals("Test", Arrays.toString(encrypted));
 
+        //when
+        byte[] decrypted = cipher.decrypt(encrypted, "password");
+        assertEquals("Test", new String(decrypted));
 
     }
 }
