@@ -53,8 +53,8 @@ public class Cipher {
     private SecretKeySpec secretKeySpec(String password) {
         SecretKeyFactory secretKeyFactory = secretKeyFactory();
         KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, iterationCount, size);
-        byte[] encoded = generateSecretKey(secretKeyFactory, keySpec).getEncoded();
-        return new SecretKeySpec(encoded, "AES");
+        SecretKey secretKey = generateSecretKey(secretKeyFactory, keySpec);
+        return new SecretKeySpec(secretKey.getEncoded(), "AES");
     }
 
     private byte[] execute(byte[] bytes, javax.crypto.Cipher cipher) {
