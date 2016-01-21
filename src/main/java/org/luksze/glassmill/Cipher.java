@@ -26,7 +26,7 @@ public class Cipher {
     };
 
     private static final int DEFAULT_SIZE = 128;
-    private static final int DEFAULT_ITERATION_COUNT = 1024;
+    private static final int DEFAULT_ITERATION_COUNT = 65536;
 
     private final int size;
     private final byte[] salt;
@@ -53,8 +53,8 @@ public class Cipher {
     private SecretKeySpec secretKeySpec(String password) {
         SecretKeyFactory secretKeyFactory = secretKeyFactory();
         KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, iterationCount, size);
-        SecretKey secretKey = generateSecretKey(secretKeyFactory, keySpec);
-        return new SecretKeySpec(secretKey.getEncoded(), "AES");
+        byte[] encoded = generateSecretKey(secretKeyFactory, keySpec).getEncoded();
+        return new SecretKeySpec(encoded, "AES");
     }
 
     private byte[] execute(byte[] bytes, javax.crypto.Cipher cipher) {
