@@ -1,4 +1,4 @@
-package org.luksze.glassmill;
+package org.luksze.sillyfedor;
 
 import org.junit.Test;
 

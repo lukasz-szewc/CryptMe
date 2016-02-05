@@ -1,4 +1,4 @@
-package org.luksze.glassmill;
+package org.luksze.sillyfedor;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
