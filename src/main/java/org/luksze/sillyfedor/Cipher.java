@@ -5,7 +5,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
 import static javax.crypto.Cipher.ENCRYPT_MODE;
@@ -51,9 +50,8 @@ public class Cipher {
     }
 
     private SecretKeySpec secretKeySpec(String password) {
-        SecretKeyFactory secretKeyFactory = secretKeyFactory();
         KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, iterationCount, size);
-        byte[] encoded = generateSecretKey(secretKeyFactory, keySpec).getEncoded();
+        byte[] encoded = generateSecretKey(keySpec).getEncoded();
         return new SecretKeySpec(encoded, "AES");
     }
 
@@ -65,19 +63,11 @@ public class Cipher {
         }
     }
 
-    private SecretKey generateSecretKey(SecretKeyFactory secretKeyFactory, KeySpec keySpec) {
+    private SecretKey generateSecretKey(KeySpec keySpec) {
         try {
-            return secretKeyFactory.generateSecret(keySpec);
-        } catch (InvalidKeySpecException e) {
+            return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1").generateSecret(keySpec);
+        } catch (GeneralSecurityException e) {
             throw new IllegalStateException("Invalid key passed into secret key factory", e);
-        }
-    }
-
-    private SecretKeyFactory secretKeyFactory() {
-        try {
-            return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("Cannot create secret key factory", e);
         }
     }
 
