@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -31,29 +32,25 @@ public class Gui extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         filePick = new FilePick(primaryStage);
-
         primaryStage.setTitle("SillyFedor");
         GridPane gridPane = constructGridPane();
-
-        final Button encryptButton = new Button("Select file to encrypt...");
-        encryptButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                filePick.display();
-            }
-        });
-
-        gridPane.add(encryptButton, 0, 0);
-
-        Text text = new Text();
-        text.setText("Please select file...");
-        text.textProperty().bind(filePick.stringProperty);
-        text.visibleProperty().bind(filePick.fileSelected);
-        gridPane.add(text, 0, 1);
-
+        gridPane.add(createSelectFileButton(), 0, 0);
+        gridPane.add(createSelectedFileText(), 0, 1);
         primaryStage.setScene(new Scene(gridPane, 770, 250));
         primaryStage.show();
+    }
+
+    private Text createSelectedFileText() {
+        Text text = new Text();
+        text.textProperty().bind(filePick.stringProperty);
+        text.visibleProperty().bind(filePick.fileSelected);
+        return text;
+    }
+
+    private Button createSelectFileButton() {
+        final Button selectFileButton = new Button("Select file encrypt/decrypt...");
+        selectFileButton.setOnAction(new FilePickEventHandler());
+        return selectFileButton;
     }
 
     private GridPane constructGridPane() {
@@ -91,6 +88,14 @@ public class Gui extends Application {
                 selectedFile = null;
                 fileSelected.setValue(FALSE);
             }
+        }
+    }
+
+    private class FilePickEventHandler implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent event) {
+            filePick.display();
         }
     }
 }
