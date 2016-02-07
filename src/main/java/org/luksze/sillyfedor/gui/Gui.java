@@ -10,13 +10,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.luksze.sillyfedor.Cipher;
+import org.luksze.sillyfedor.CipherFile;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
@@ -36,7 +40,31 @@ public class Gui extends Application {
         GridPane gridPane = constructGridPane();
         gridPane.add(createSelectFileButton(), 0, 0);
         gridPane.add(createSelectedFileText(), 0, 1);
+        final PasswordField passwordField = new PasswordField();
+        gridPane.add(passwordField, 0, 2);
         primaryStage.setScene(new Scene(gridPane, 770, 250));
+        Button encryptButton = new Button("Encrypt");
+        encryptButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                CipherFile cipherFile = new CipherFile();
+                Path source = filePick.selectedFile.toPath();
+                Path path = Paths.get(source.getParent().toString(), source.getFileName() + ".enc");
+                cipherFile.encrypt(source, path, passwordField.getText());
+            }
+        });
+        Button decryptButtton = new Button("Decrypt");
+        decryptButtton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                CipherFile cipherFile = new CipherFile();
+                Path source = filePick.selectedFile.toPath();
+                Path path = Paths.get(source.getParent().toString(), source.getFileName() + ".dec");
+                cipherFile.decrypt(source, path, passwordField.getText());
+            }
+        });
+        gridPane.add(encryptButton, 0, 3);
+        gridPane.add(decryptButtton, 1, 3);
         primaryStage.show();
     }
 
