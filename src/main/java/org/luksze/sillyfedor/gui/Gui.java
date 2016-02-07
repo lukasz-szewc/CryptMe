@@ -15,7 +15,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.luksze.sillyfedor.Cipher;
 import org.luksze.sillyfedor.CipherFile;
 
 import java.io.File;
