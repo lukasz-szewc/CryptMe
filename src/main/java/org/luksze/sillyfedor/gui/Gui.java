@@ -41,7 +41,13 @@ public class Gui extends Application {
         gridPane.add(createSelectedFileText(), 0, 1);
         final PasswordField passwordField = new PasswordField();
         gridPane.add(passwordField, 0, 2);
+        gridPane.add(constructEncryptButton(passwordField), 0, 3);
+        gridPane.add(constructDecryptButton(passwordField), 1, 3);
         primaryStage.setScene(new Scene(gridPane, 770, 250));
+        primaryStage.show();
+    }
+
+    private Button constructEncryptButton(final PasswordField passwordField) {
         Button encryptButton = new Button("Encrypt");
         encryptButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -52,8 +58,12 @@ public class Gui extends Application {
                 cipherFile.encrypt(source, path, passwordField.getText());
             }
         });
-        Button decryptButtton = new Button("Decrypt");
-        decryptButtton.setOnAction(new EventHandler<ActionEvent>() {
+        return encryptButton;
+    }
+
+    private Button constructDecryptButton(final PasswordField passwordField) {
+        Button decryptButton = new Button("Decrypt");
+        decryptButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CipherFile cipherFile = new CipherFile();
@@ -62,9 +72,7 @@ public class Gui extends Application {
                 cipherFile.decrypt(source, path, passwordField.getText());
             }
         });
-        gridPane.add(encryptButton, 0, 3);
-        gridPane.add(decryptButtton, 1, 3);
-        primaryStage.show();
+        return decryptButton;
     }
 
     private Text createSelectedFileText() {
