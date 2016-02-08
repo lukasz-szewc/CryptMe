@@ -8,10 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -41,9 +44,8 @@ public class Gui extends Application {
         gridPane.add(createSelectedFileText(), 0, 1);
         final PasswordField passwordField = new PasswordField();
         gridPane.add(passwordField, 0, 2);
-        gridPane.add(constructEncryptButton(passwordField), 0, 3);
-        gridPane.add(constructDecryptButton(passwordField), 1, 3);
-        primaryStage.setScene(new Scene(gridPane, 770, 250));
+        gridPane.add(new HBox(10, constructEncryptButton(passwordField), constructDecryptButton(passwordField)), 0, 3);
+        primaryStage.setScene(new Scene(gridPane, 350, 250));
         primaryStage.show();
     }
 
@@ -94,7 +96,6 @@ public class Gui extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 20, 20, 20));
-//        grid.setPrefSize(400, 500);
         return grid;
     }
 
