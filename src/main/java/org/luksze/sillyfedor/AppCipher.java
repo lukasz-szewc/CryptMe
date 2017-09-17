@@ -1,17 +1,18 @@
 package org.luksze.sillyfedor;
 
-import javax.crypto.*;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.*;
+import java.security.GeneralSecurityException;
 import java.security.spec.KeySpec;
 
 import static javax.crypto.Cipher.ENCRYPT_MODE;
 import static javax.crypto.Cipher.DECRYPT_MODE;
 import static javax.crypto.Cipher.getInstance;
 
-public class Cipher {
+public class AppCipher {
     private static final byte[] DEFAULT_SALT = {
             (byte) 0xA4, (byte) 0x0B, (byte) 0xC8, (byte) 0x34,
             (byte) 0xD6, (byte) 0x95, (byte) 0xF3, (byte) 0x13
@@ -32,7 +33,7 @@ public class Cipher {
     private final byte[] initialVector;
     private int iterationCount;
 
-    public Cipher() {
+    public AppCipher() {
         initialVector = DEFAULT_INITIAL_VECTOR;
         salt = DEFAULT_SALT;
         size = DEFAULT_SIZE;

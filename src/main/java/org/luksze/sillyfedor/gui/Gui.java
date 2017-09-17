@@ -8,17 +8,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.luksze.sillyfedor.CipherFile;
+import org.luksze.sillyfedor.AppCipherFile;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -54,10 +52,10 @@ public class Gui extends Application {
         encryptButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                CipherFile cipherFile = new CipherFile();
+                AppCipherFile appCipherFile = new AppCipherFile();
                 Path source = filePick.selectedFile.toPath();
                 Path path = Paths.get(source.getParent().toString(), source.getFileName() + ".enc");
-                cipherFile.encrypt(source, path, passwordField.getText());
+                appCipherFile.encrypt(source, path, passwordField.getText());
             }
         });
         return encryptButton;
@@ -68,10 +66,10 @@ public class Gui extends Application {
         decryptButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                CipherFile cipherFile = new CipherFile();
+                AppCipherFile appCipherFile = new AppCipherFile();
                 Path source = filePick.selectedFile.toPath();
                 Path path = Paths.get(source.getParent().toString(), source.getFileName() + ".dec");
-                cipherFile.decrypt(source, path, passwordField.getText());
+                appCipherFile.decrypt(source, path, passwordField.getText());
             }
         });
         return decryptButton;

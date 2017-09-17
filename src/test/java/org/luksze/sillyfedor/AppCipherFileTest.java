@@ -13,7 +13,7 @@ import static java.nio.file.Paths.get;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
-public class CipherFileTest {
+public class AppCipherFileTest {
 
     private Path sourcePath;
     private Path encryptedFilePath;
@@ -22,16 +22,16 @@ public class CipherFileTest {
     @Test
     public void testFileEncryption() throws Exception {
         //given
-        CipherFile cipherFile = new CipherFile();
+        AppCipherFile appCipherFile = new AppCipherFile();
 
         //when
-        cipherFile.encrypt(sourcePath, encryptedFilePath, "password");
+        appCipherFile.encrypt(sourcePath, encryptedFilePath, "password");
 
         //then
         assertTrue(exists(encryptedFilePath));
 
         //when
-        cipherFile.decrypt(encryptedFilePath, decryptedFilePath, "password");
+        appCipherFile.decrypt(encryptedFilePath, decryptedFilePath, "password");
 
         //then
         assertTrue(exists(decryptedFilePath));
