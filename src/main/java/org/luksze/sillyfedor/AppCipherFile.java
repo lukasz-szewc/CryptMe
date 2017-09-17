@@ -3,14 +3,14 @@ package org.luksze.sillyfedor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class CipherFile {
+public class AppCipherFile {
 
     public void encrypt(Path source, Path destination, String password) {
         validateInput(source, destination, password);
         try {
-            Cipher cipher = new Cipher();
+            AppCipher appCipher = new AppCipher();
             byte[] inputFileBytes = Files.readAllBytes(source);
-            byte[] encryptedBytes = cipher.encrypt(inputFileBytes, password);
+            byte[] encryptedBytes = appCipher.encrypt(inputFileBytes, password);
             Files.write(destination, encryptedBytes);
         } catch (Exception e) {
             throw new IllegalStateException(e);
@@ -20,9 +20,9 @@ public class CipherFile {
     public void decrypt(Path source, Path destination, String password) {
         validateInput(source, destination, password);
         try {
-            Cipher cipher = new Cipher();
+            AppCipher appCipher = new AppCipher();
             byte[] inputFileBytes = Files.readAllBytes(source);
-            byte[] decryptedBytes = cipher.decrypt(inputFileBytes, password);
+            byte[] decryptedBytes = appCipher.decrypt(inputFileBytes, password);
             Files.write(destination, decryptedBytes);
         } catch (Exception e) {
             throw new IllegalStateException(e);

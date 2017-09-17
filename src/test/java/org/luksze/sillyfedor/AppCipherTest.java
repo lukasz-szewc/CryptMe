@@ -6,22 +6,22 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class CipherTest {
+public class AppCipherTest {
 
     @Test
     public void checkCipherBasicFunctionality() throws Exception {
         //given
-        Cipher cipher = new Cipher();
+        AppCipher appCipher = new AppCipher();
 
         //when
-        byte[] encrypted = cipher.encrypt("Test".getBytes(), "password");
+        byte[] encrypted = appCipher.encrypt("Test".getBytes(), "password");
 
         //then
         assertTrue(encrypted.length > 0);
         assertNotEquals("Test", Arrays.toString(encrypted));
 
         //when
-        byte[] decrypted = cipher.decrypt(encrypted, "password");
+        byte[] decrypted = appCipher.decrypt(encrypted, "password");
         assertEquals("Test", new String(decrypted));
 
     }
