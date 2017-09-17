@@ -1,4 +1,4 @@
-package org.luksze.sillyfedor;
+package org.luksze.cryptme;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;

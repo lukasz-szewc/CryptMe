@@ -1,4 +1,4 @@
-package org.luksze.sillyfedor.gui;
+package org.luksze.cryptme.gui;
 
 import javafx.application.Application;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -16,7 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.luksze.sillyfedor.AppCipherFile;
+import org.luksze.cryptme.AppCipherFile;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -36,7 +36,7 @@ public class Gui extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         filePick = new FilePick(primaryStage);
-        primaryStage.setTitle("SillyFedor");
+        primaryStage.setTitle("CryptMe");
         GridPane gridPane = constructGridPane();
         gridPane.add(createSelectFileButton(), 0, 0);
         gridPane.add(createSelectedFileText(), 0, 1);

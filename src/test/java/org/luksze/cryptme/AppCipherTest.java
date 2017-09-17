@@ -1,4 +1,4 @@
-package org.luksze.sillyfedor;
+package org.luksze.cryptme;
 
 import org.junit.Test;
 
