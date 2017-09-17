@@ -1,5 +1,6 @@
 package org.luksze.cryptme;
 
+import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
@@ -7,10 +8,6 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.GeneralSecurityException;
 import java.security.spec.KeySpec;
-
-import static javax.crypto.Cipher.ENCRYPT_MODE;
-import static javax.crypto.Cipher.DECRYPT_MODE;
-import static javax.crypto.Cipher.getInstance;
 
 public class AppCipher {
     private static final byte[] DEFAULT_SALT = {
@@ -41,12 +38,12 @@ public class AppCipher {
     }
 
     public byte[] encrypt(byte[] bytes, String password) {
-        javax.crypto.Cipher aes = cipherInstance(ENCRYPT_MODE, secretKeySpec(password));
+        Cipher aes = cipherInstance(Cipher.ENCRYPT_MODE, secretKeySpec(password));
         return execute(bytes, aes);
     }
 
     public byte[] decrypt(byte[] bytes, String password){
-        javax.crypto.Cipher cipher = cipherInstance(DECRYPT_MODE, secretKeySpec(password));
+        Cipher cipher = cipherInstance(Cipher.DECRYPT_MODE, secretKeySpec(password));
         return execute(bytes, cipher);
     }
 
@@ -56,7 +53,7 @@ public class AppCipher {
         return new SecretKeySpec(encoded, "AES");
     }
 
-    private byte[] execute(byte[] bytes, javax.crypto.Cipher cipher) {
+    private byte[] execute(byte[] bytes, Cipher cipher) {
         try {
             return cipher.doFinal(bytes);
         } catch (GeneralSecurityException e) {
@@ -72,9 +69,9 @@ public class AppCipher {
         }
     }
 
-    private javax.crypto.Cipher cipherInstance(int mode, SecretKey secret) {
+    private Cipher cipherInstance(int mode, SecretKey secret) {
         try {
-            javax.crypto.Cipher cipher = getInstance("AES/CBC/PKCS5Padding");
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(mode, secret, new IvParameterSpec(initialVector));
             return cipher;
         } catch (GeneralSecurityException e) {
