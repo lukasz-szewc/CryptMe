@@ -10,8 +10,10 @@ import java.nio.file.Path;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
+import static org.luksze.cryptme.AppCipherStreamTest.EXPECTED_MD5;
+import static org.luksze.cryptme.MdFiveTest.md5;
 
 public class AppCipherFileTest {
 
@@ -29,6 +31,7 @@ public class AppCipherFileTest {
 
         //then
         assertTrue(exists(encryptedFilePath));
+        assertThat(md5(encryptedFilePath), is(EXPECTED_MD5));
 
         //when
         appCipherFile.decrypt(encryptedFilePath, decryptedFilePath, "password");
