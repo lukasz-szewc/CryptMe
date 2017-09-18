@@ -13,7 +13,7 @@ import static java.nio.file.Paths.get;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.luksze.cryptme.AppCipherStreamTest.EXPECTED_MD5;
-import static org.luksze.cryptme.AppCipherStreamTest.md5;
+import static org.luksze.cryptme.MdFiveTest.md5;
 
 public class AppCipherFileTest {
 

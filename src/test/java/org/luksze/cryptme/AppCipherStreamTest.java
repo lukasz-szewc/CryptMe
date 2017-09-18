@@ -5,15 +5,11 @@ import org.junit.Test;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import java.io.*;
-import java.math.BigInteger;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import static java.lang.Boolean.TRUE;
-import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -34,16 +30,11 @@ public class AppCipherStreamTest {
 
         //then
         assertThat(fileHasBeenCreated(loremPath.getParent()), is(TRUE));
-        assertThat(md5(pathToDestinationFile(loremPath)), is(EXPECTED_MD5));
+        assertThat(MdFiveTest.md5(pathToDestinationFile(loremPath)), is(EXPECTED_MD5));
     }
 
     private Path pathToDestinationFile(Path loremPath) {
         return loremPath.getParent().resolve(DESTINATION_FILE);
-    }
-
-    static String md5(Path resolve) throws NoSuchAlgorithmException, IOException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        return new BigInteger(1, md5.digest(readAllBytes(resolve))).toString(16);
     }
 
     private boolean fileHasBeenCreated(Path parent) {
