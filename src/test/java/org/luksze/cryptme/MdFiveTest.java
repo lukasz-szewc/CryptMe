@@ -1,5 +1,6 @@
 package org.luksze.cryptme;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -41,7 +42,6 @@ public class MdFiveTest {
     }
 
     static String md5(Path resolve) throws NoSuchAlgorithmException, IOException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        return new BigInteger(1, md5.digest(readAllBytes(resolve))).toString(16);
+        return DigestUtils.md5Hex(readAllBytes(resolve));
     }
 }
