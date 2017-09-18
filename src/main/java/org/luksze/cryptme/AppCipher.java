@@ -30,19 +30,19 @@ public class AppCipher {
     private final byte[] initialVector;
     private int iterationCount;
 
-    public AppCipher() {
+    AppCipher() {
         initialVector = DEFAULT_INITIAL_VECTOR;
         salt = DEFAULT_SALT;
         size = DEFAULT_SIZE;
         iterationCount = DEFAULT_ITERATION_COUNT;
     }
 
-    public byte[] encrypt(byte[] bytes, String password) {
-        Cipher aes = cipherInstance(Cipher.ENCRYPT_MODE, secretKeySpec(password));
+    byte[] encrypt(byte[] bytes, String password) {
+        Cipher aes = constructEncryptCipher(password);
         return execute(bytes, aes);
     }
 
-    public byte[] decrypt(byte[] bytes, String password){
+    byte[] decrypt(byte[] bytes, String password){
         Cipher cipher = cipherInstance(Cipher.DECRYPT_MODE, secretKeySpec(password));
         return execute(bytes, cipher);
     }
@@ -67,6 +67,10 @@ public class AppCipher {
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException("Invalid key passed into secret key factory", e);
         }
+    }
+
+    Cipher constructEncryptCipher(String password) {
+        return cipherInstance(Cipher.ENCRYPT_MODE, secretKeySpec(password));
     }
 
     private Cipher cipherInstance(int mode, SecretKey secret) {
