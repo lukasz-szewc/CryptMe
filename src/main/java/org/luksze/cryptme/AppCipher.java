@@ -43,7 +43,7 @@ public class AppCipher {
     }
 
     byte[] decrypt(byte[] bytes, String password){
-        Cipher cipher = cipherInstance(Cipher.DECRYPT_MODE, secretKeySpec(password));
+        Cipher cipher = constructDecryptCipher(password);
         return execute(bytes, cipher);
     }
 
@@ -71,6 +71,10 @@ public class AppCipher {
 
     Cipher constructEncryptCipher(String password) {
         return cipherInstance(Cipher.ENCRYPT_MODE, secretKeySpec(password));
+    }
+
+    Cipher constructDecryptCipher(String password) {
+        return cipherInstance(Cipher.DECRYPT_MODE, secretKeySpec(password));
     }
 
     private Cipher cipherInstance(int mode, SecretKey secret) {
