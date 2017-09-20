@@ -57,7 +57,7 @@ public class AppCipherStreamTest {
 
     private void cipherAndTailoredStreamIsUsedToEncryptFile(Cipher cipher, Path loremPath) throws IOException {
         PaddingAwareCipherOutputStream outputSteam = new PaddingAwareCipherOutputStream(constructFileOutputStream(loremPath), cipher);
-        CipherInputStream inputStream = new CipherInputStream(constructInputStream(loremPath), cipher);
+        FileInputStream inputStream = constructInputStream(loremPath);
         copy(inputStream, outputSteam);
         inputStream.close();
         outputSteam.close();
