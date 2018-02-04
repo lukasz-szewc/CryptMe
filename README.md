@@ -1,5 +1,5 @@
-# CryptMe
-Simple application that can encrypt files.
+# simple-encryption-tool
+Simple application that can encrypt and decrypt files.
 
-[![Build Status](https://travis-ci.org/lukasz-szewc/CryptMe.svg?branch=master)](https://travis-ci.org/lukasz-szewc/CryptMe)
-[![codecov](https://codecov.io/gh/lukasz-szewc/CryptMe/branch/master/graph/badge.svg)](https://codecov.io/gh/lukasz-szewc/CryptMe)
+[![Build Status](https://travis-ci.org/lukasz-szewc/simple-encryption-tool.svg?branch=master)](https://travis-ci.org/lukasz-szewc/simple-encryption-tool)
+[![codecov](https://codecov.io/gh/lukasz-szewc/simple-encryption-tool/branch/master/graph/badge.svg)](https://codecov.io/gh/lukasz-szewc/simple-encryption-tool)
