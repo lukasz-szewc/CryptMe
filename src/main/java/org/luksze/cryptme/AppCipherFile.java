@@ -6,7 +6,6 @@ import java.nio.file.Path;
 public class AppCipherFile {
 
     public void encrypt(Path source, Path destination, String password) {
-        validateInput(source, destination, password);
         try {
             AppCipher appCipher = new AppCipher();
             byte[] inputFileBytes = Files.readAllBytes(source);
@@ -18,7 +17,6 @@ public class AppCipherFile {
     }
 
     public void decrypt(Path source, Path destination, String password) {
-        validateInput(source, destination, password);
         try {
             AppCipher appCipher = new AppCipher();
             byte[] inputFileBytes = Files.readAllBytes(source);
@@ -27,11 +25,5 @@ public class AppCipherFile {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
-    }
-
-    private void validateInput(@SuppressWarnings("unused") Path source,
-                               @SuppressWarnings("unused") Path destination,
-                               @SuppressWarnings("unused") String password) {
-
     }
 }
