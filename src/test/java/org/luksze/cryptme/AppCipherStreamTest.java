@@ -13,6 +13,7 @@ import static java.lang.Boolean.TRUE;
 import static java.nio.file.Paths.get;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.luksze.cryptme.MdFiveTest.md5;
 
 public class AppCipherStreamTest {
 
@@ -29,8 +30,9 @@ public class AppCipherStreamTest {
         cipherIsUsedToEncryptFile(cipher, loremPath);
 
         //then
-        assertThat(fileHasBeenCreated(loremPath.getParent()), is(TRUE));
-        assertThat(MdFiveTest.md5(pathToDestinationFile(loremPath)), is(EXPECTED_MD5));
+        Path destinationFile = loremPath.getParent().resolve(DESTINATION_FILE);
+        assertThat(destinationFile.toFile().exists(), is(TRUE));
+        assertThat(md5(destinationFile), is(EXPECTED_MD5));
     }
 
     @Test
@@ -43,16 +45,9 @@ public class AppCipherStreamTest {
         cipherAndTailoredStreamIsUsedToEncryptFile(cipher, loremPath);
 
         //then
-        assertThat(fileHasBeenCreated(loremPath.getParent()), is(TRUE));
-        assertThat(MdFiveTest.md5(pathToDestinationFile(loremPath)), is(EXPECTED_MD5));
-    }
-
-    private Path pathToDestinationFile(Path loremPath) {
-        return loremPath.getParent().resolve(DESTINATION_FILE);
-    }
-
-    private boolean fileHasBeenCreated(Path parent) {
-        return parent.resolve(DESTINATION_FILE).toFile().exists();
+        Path destinationFile = loremPath.getParent().resolve(DESTINATION_FILE);
+        assertThat(destinationFile.toFile().exists(), is(TRUE));
+        assertThat(md5(destinationFile), is(EXPECTED_MD5));
     }
 
     private void cipherAndTailoredStreamIsUsedToEncryptFile(Cipher cipher, Path loremPath) throws IOException {
