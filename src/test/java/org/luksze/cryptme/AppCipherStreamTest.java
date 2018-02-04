@@ -13,6 +13,7 @@ import static java.lang.Boolean.TRUE;
 import static java.nio.file.Paths.get;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.luksze.cryptme.MdFiveTest.md5;
 
 public class AppCipherStreamTest {
 
@@ -29,31 +30,55 @@ public class AppCipherStreamTest {
         cipherIsUsedToEncryptFile(cipher, loremPath);
 
         //then
-        assertThat(fileHasBeenCreated(loremPath.getParent()), is(TRUE));
-        assertThat(MdFiveTest.md5(pathToDestinationFile(loremPath)), is(EXPECTED_MD5));
+        Path destinationFile = loremPath.getParent().resolve(DESTINATION_FILE);
+        assertThat(destinationFile.toFile().exists(), is(TRUE));
+        assertThat(md5(destinationFile), is(EXPECTED_MD5));
     }
 
-    private Path pathToDestinationFile(Path loremPath) {
-        return loremPath.getParent().resolve(DESTINATION_FILE);
+    @Test
+    public void fileEncryptionCanBeDoneUsingCipherAndTailoredInputStream() throws Exception {
+        //given
+        Cipher cipher = new AppCipher().constructEncryptCipher("password");
+        Path loremPath = fileToBeEncrypted();
+
+        //when
+        cipherAndTailoredStreamIsUsedToEncryptFile(cipher, loremPath);
+
+        //then
+        Path destinationFile = loremPath.getParent().resolve(DESTINATION_FILE);
+        assertThat(destinationFile.toFile().exists(), is(TRUE));
+        assertThat(md5(destinationFile), is(EXPECTED_MD5));
     }
 
-    private boolean fileHasBeenCreated(Path parent) {
-        return parent.resolve(DESTINATION_FILE).toFile().exists();
+    private void cipherAndTailoredStreamIsUsedToEncryptFile(Cipher cipher, Path loremPath) throws IOException {
+        PaddingAwareCipherOutputStream outputSteam = new PaddingAwareCipherOutputStream(constructFileOutputStream(loremPath), cipher);
+        FileInputStream inputStream = constructInputStream(loremPath);
+        copy(inputStream, outputSteam);
+        inputStream.close();
+        outputSteam.close();
     }
 
     private void cipherIsUsedToEncryptFile(Cipher cipher, Path loremPath) throws IOException {
-        FileOutputStream out = new FileOutputStream(new File(loremPath.getParent().toFile(), DESTINATION_FILE));
-        CipherInputStream inputStream = new CipherInputStream(new FileInputStream(loremPath.toFile()), cipher);
-        copy(out, inputStream);
+        FileOutputStream out = constructFileOutputStream(loremPath);
+        CipherInputStream inputStream = new CipherInputStream(constructInputStream(loremPath), cipher);
+        copy(inputStream, out);
         inputStream.close();
         out.close();
     }
 
-    private void copy(FileOutputStream out, CipherInputStream cipherInputStream) throws IOException {
+    private FileInputStream constructInputStream(Path loremPath) throws FileNotFoundException {
+        return new FileInputStream(loremPath.toFile());
+    }
+
+    private FileOutputStream constructFileOutputStream(Path loremPath) throws FileNotFoundException {
+        return new FileOutputStream(new File(loremPath.getParent().toFile(), DESTINATION_FILE));
+    }
+
+    private void copy(InputStream inputStream, OutputStream outputStream) throws IOException {
         byte[] bytes = new byte[512];
         int readInteger;
-        while ((readInteger = cipherInputStream.read(bytes)) != -1) {
-            out.write(bytes, 0, readInteger);
+        while ((readInteger = inputStream.read(bytes)) != -1) {
+            outputStream.write(bytes, 0, readInteger);
         }
     }
 
