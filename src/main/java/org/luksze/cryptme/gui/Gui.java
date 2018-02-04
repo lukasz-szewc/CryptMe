@@ -5,14 +5,18 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -37,14 +41,53 @@ public class Gui extends Application {
     public void start(final Stage primaryStage) throws Exception {
         filePick = new FilePick(primaryStage);
         primaryStage.setTitle("CryptMe");
-        GridPane gridPane = constructGridPane();
-        gridPane.add(createSelectFileButton(), 0, 0);
-        gridPane.add(createSelectedFileText(), 0, 1);
-        final PasswordField passwordField = new PasswordField();
-        gridPane.add(passwordField, 0, 2);
-        gridPane.add(new HBox(10, constructEncryptButton(passwordField), constructDecryptButton(passwordField)), 0, 3);
-        primaryStage.setScene(new Scene(gridPane, 350, 250));
+
+        GridPane mainGrid = new GridPane();
+        Node confirmation = confirmation();
+        mainGrid.add(new Text("1. Do you want to encrypt or decrypt file?"), 0, 0);
+        mainGrid.add(confirmation, 1, 0);
+        HBox encryptDecryptButtonsBox = encryptDecryptButtonsBox();
+        mainGrid.add(encryptDecryptButtonsBox, 0, 1);
+
+        Button selectFile = new Button("Click to select file...");
+        VBox hBox = new VBox(10, new Text("2. Please select file..."), selectFile);
+        hBox.setVisible(false);
+
+        mainGrid.add(hBox, 0, 2);
+        mainGrid.setAlignment(Pos.CENTER);
+        mainGrid.setPadding(new Insets(20, 20, 20, 20));
+        mainGrid.setHgap(14);
+        mainGrid.setVgap(10);
+
+        mainGrid.addEventHandler(EncryptEvent.ENCRYPT_SELECTION, event -> {
+            confirmation.setVisible(true);
+            encryptDecryptButtonsBox.setVisible(false);
+            hBox.setVisible(true);
+        });
+//        mainGrid.setStyle("-fx-grid-lines-visible: true");
+
+        primaryStage.setScene(new Scene(mainGrid, 450, 350));
         primaryStage.show();
+    }
+
+    private Node confirmation() {
+        Node node = new Text("Completed!");
+        node.setVisible(false);
+        node.setStyle("-fx-text-fill: #069b2c");
+        return node;
+    }
+
+    private HBox encryptDecryptButtonsBox() {
+        Button encryptButton = new Button("Encrypt");
+        encryptButton.setStyle("-fx-text-fill: #069b2c");
+        encryptButton.setOnAction(event -> encryptButton.fireEvent(new EncryptEvent()));
+
+        Button decryptButton = new Button("Decrypt");
+        decryptButton.setStyle("-fx-text-fill: #20489b");
+
+        HBox hBox = new HBox(10, encryptButton, decryptButton);
+        hBox.setAlignment(Pos.CENTER);
+        return hBox;
     }
 
     private Button constructEncryptButton(final PasswordField passwordField) {
@@ -132,4 +175,25 @@ public class Gui extends Application {
             filePick.display();
         }
     }
+
+    private static class UserDecision {
+        public void decisionToEncrypt() {
+
+        }
+
+        public void decisionToDecrypt() {
+
+        }
+    }
+
+
+    private static class EncryptEvent extends Event {
+
+        public static final EventType<Event> ENCRYPT_SELECTION = new EventType<>("ENCRYPT_SELECTION");
+
+        public EncryptEvent() {
+            super(ENCRYPT_SELECTION);
+        }
+    }
+
 }
