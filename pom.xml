@@ -4,7 +4,7 @@
 
     <groupId>org.luksze</groupId>
     <artifactId>simple-encryption-tool</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -104,6 +104,6 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/lukasz-szewc/simple-encryption-tool.git</developerConnection>
-        <tag>simple-encryption-tool-0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
