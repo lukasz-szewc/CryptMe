@@ -10,10 +10,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.luksze.cryptme.AppCipherFile;
@@ -36,14 +43,21 @@ public class Gui extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         filePick = new FilePick(primaryStage);
-        primaryStage.setTitle("CryptMe");
+        primaryStage.setTitle("simple-encryption-tool");
         GridPane gridPane = constructGridPane();
         gridPane.add(createSelectFileButton(), 0, 0);
-        gridPane.add(createSelectedFileText(), 0, 1);
+        final HBox hBox = new HBox(createSelectedFileText());
+        hBox.setAlignment(Pos.CENTER);
+        gridPane.add(hBox, 0, 1);
         final PasswordField passwordField = new PasswordField();
-        gridPane.add(passwordField, 0, 2);
-        gridPane.add(new HBox(10, constructEncryptButton(passwordField), constructDecryptButton(passwordField)), 0, 3);
-        primaryStage.setScene(new Scene(gridPane, 350, 250));
+        gridPane.add(new VBox(new Label("Password:"), passwordField), 0, 2);
+        final HBox child = new HBox(10, constructEncryptButton(passwordField), constructDecryptButton(passwordField));
+        child.setAlignment(Pos.CENTER);
+        gridPane.add(child, 0, 3);
+        gridPane.setBackground(new Background(new BackgroundFill(
+                Color.ALICEBLUE,
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        primaryStage.setScene(new Scene(gridPane, 400, 300));
         primaryStage.show();
     }
 
@@ -77,6 +91,7 @@ public class Gui extends Application {
 
     private Text createSelectedFileText() {
         Text text = new Text();
+        text.setTextAlignment(TextAlignment.CENTER);
         text.textProperty().bind(filePick.stringProperty);
         text.visibleProperty().bind(filePick.fileSelected);
         return text;
@@ -115,7 +130,7 @@ public class Gui extends Application {
         public void display() {
             File file = fileChooser.showOpenDialog(primaryStage);
             if (file != null && file.exists() && file.isFile()) {
-                stringProperty.setValue(file.getAbsolutePath());
+                stringProperty.setValue(file.getName());
                 fileSelected.setValue(TRUE);
                 selectedFile = file;
             } else {
